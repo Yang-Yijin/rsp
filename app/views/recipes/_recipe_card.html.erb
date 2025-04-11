@@ -1,0 +1,11 @@
+<div class="recipe-card">
+  <h2><%= link_to recipe.title, recipe_path(recipe) %></h2>
+  <div class="recipe-meta">
+    <span class="cook-time"><i class="fa fa-clock-o"></i> <%= recipe.cook_time %> minutes</span>
+    <span class="author">by <%= link_to recipe.user.username, user_path(recipe.user) %></span>
+  </div>
+  <p class="description"><%= truncate(recipe.description, length: 100) %></p>
+  <div class="card-footer">
+    <%= link_to "View Details", recipe_path(recipe), class: "btn btn-sm btn-outline" %>
+  </div>
+</div>

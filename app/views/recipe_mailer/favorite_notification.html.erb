@@ -1,0 +1,10 @@
+<h1>Your recipe was favorited!</h1>
+<p>
+  Hello <%= @user.username %>,
+</p>
+<p>
+  Great news! <%= @favorited_by.username %> has favorited your recipe "<%= @recipe.title %>".
+</p>
+<p>
+  View your recipe: <%= link_to @recipe.title, recipe_url(@recipe) %>
+</p>

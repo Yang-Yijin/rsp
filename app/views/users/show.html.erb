@@ -1,0 +1,26 @@
+<div class="user-profile">
+  <div class="user-header">
+    <h1><%= @user.username %></h1>
+    <div class="user-bio">
+      <p><%= @user.bio %></p>
+    </div>
+    
+    <% if @user == current_user %>
+      <%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  
+  <div class="user-recipes">
+    <h2><%= @user.username %>'s Recipes</h2>
+    
+    <% if @recipes.any? %>
+      <div class="recipes-grid">
+        <% @recipes.each do |recipe| %>
+          <%= render 'recipes/recipe_card', recipe: recipe %>
+        <% end %>
+      </div>
+    <% else %>
+      <p>No recipes published yet</p>
+    <% end %>
+  </div>
+</div>

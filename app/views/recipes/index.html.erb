@@ -1,0 +1,18 @@
+<div class="recipes-index">
+  <div class="page-header">
+    <h1>Recipe Collection</h1>
+    <% if logged_in? %>
+      <%= link_to "Create New Recipe", new_recipe_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  
+  <% if @recipes.any? %>
+    <div class="recipes-grid">
+      <% @recipes.each do |recipe| %>
+        <%= render 'recipe_card', recipe: recipe %>
+      <% end %>
+    </div>
+  <% else %>
+    <p>No recipes yet. Be the first to share a delicious recipe!</p>
+  <% end %>
+</div>

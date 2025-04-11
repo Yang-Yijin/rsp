@@ -1,0 +1,74 @@
+<%= form_with(model: @recipe, local: true, class: "recipe-form") do |f| %>
+  <div class="form-group">
+    <%= f.label :title, "Recipe Title" %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :description, "Recipe Description" %>
+    <%= f.text_area :description, rows: 5, class: "form-control" %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :cook_time, "Cooking Time (minutes)" %>
+    <%= f.number_field :cook_time, class: "form-control", min: 1 %>
+  </div>
+  
+  <h3>Ingredients</h3>
+  <div id="ingredients">
+    <%= f.fields_for :ingredients do |ingredient_form| %>
+      <div class="nested-fields">
+        <div class="form-row">
+          <div class="col">
+            <%= ingredient_form.label :name, "Ingredient Name" %>
+            <%= ingredient_form.text_field :name, class: "form-control" %>
+          </div>
+          <div class="col">
+            <%= ingredient_form.label :quantity, "Quantity" %>
+            <%= ingredient_form.text_field :quantity, class: "form-control" %>
+          </div>
+          <% if ingredient_form.object.persisted? %>
+            <div class="col-auto">
+              <%= ingredient_form.check_box :_destroy %>
+              <%= ingredient_form.label :_destroy, "Delete" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    
+    <div class="form-group">
+      <%= link_to_add_association "Add Ingredient", f, :ingredients, class: "btn btn-outline-primary btn-sm" %>
+    </div>
+  </div>
+  
+  <h3>Cooking Steps</h3>
+  <div id="steps">
+    <%= f.fields_for :steps do |step_form| %>
+      <div class="nested-fields">
+        <div class="form-group">
+          <%= step_form.label :position, "Step Number" %>
+          <%= step_form.number_field :position, class: "form-control", min: 1 %>
+        </div>
+        <div class="form-group">
+          <%= step_form.label :instructions, "Instructions" %>
+          <%= step_form.text_area :instructions, rows: 3, class: "form-control" %>
+        </div>
+        <% if step_form.object.persisted? %>
+          <div class="form-group">
+            <%= step_form.check_box :_destroy %>
+            <%= step_form.label :_destroy, "Delete" %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    
+    <div class="form-group">
+      <%= link_to_add_association "Add Step", f, :steps, class: "btn btn-outline-primary btn-sm" %>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <%= f.submit "Save Recipe", class: "btn btn-primary" %>
+  </div>
+<% end %>
