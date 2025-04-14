@@ -46,7 +46,7 @@ class StepsController < ApplicationController
 
   def require_same_user
     if current_user != @recipe.user
-      flash[:alert] = "你只能编辑自己的食谱"
+      flash[:alert] = "You can only edit your own recipe"
       redirect_to recipes_path
     end
   end

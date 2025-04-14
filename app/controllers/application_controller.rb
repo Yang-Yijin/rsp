@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include DeviseTokenAuth::Concerns::SetUserByToken
+
   helper_method :current_user, :logged_in?
 
   def current_user
@@ -10,7 +12,7 @@ class ApplicationController < ActionController::Base
   def logged_in?
     !!current_user
   end
-  # app/controllers/application_controller.rb
+
   def require_user
     unless logged_in?
       flash[:alert] = "You must be logged in to perform this action"

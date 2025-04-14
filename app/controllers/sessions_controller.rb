@@ -2,7 +2,6 @@
 
 class SessionsController < ApplicationController
   def new
-    # 登录页面
   end
 
   def create

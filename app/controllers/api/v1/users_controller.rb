@@ -1,7 +1,7 @@
 module Api
   module V1
     class UsersController < BaseController
-      skip_before_action :authenticate_user!, only: [ :show ]
+      skip_before_action :authenticate_api_user!, only: [ :show ]
 
       def show
         @user = User.find(params[:id])

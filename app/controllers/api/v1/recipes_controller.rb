@@ -1,9 +1,9 @@
 module Api
   module V1
     class RecipesController < BaseController
+      skip_before_action :authenticate_api_user!, only: [ :index, :show ]
       before_action :set_recipe, only: [ :show, :update, :destroy ]
       before_action :check_owner, only: [ :update, :destroy ]
-      skip_before_action :authenticate_user!, only: [ :index, :show ]
 
       # GET /api/v1/recipes
       def index
@@ -28,11 +28,11 @@ module Api
 
       # POST /api/v1/recipes
       def create
-        @recipe = current_user.recipes.build(recipe_params)
+        @recipe = current_api_user.recipes.build(recipe_params)
 
         if @recipe.save
-          # 发送新食谱邮件通知
-          RecipeMailer.new_recipe_notification(@recipe).deliver_later
+
+          RecipeMailer.new_recipe_notification(@recipe).deliver_later if defined?(RecipeMailer)
           render json: {
             message: "Recipe created successfully",
             recipe: @recipe.as_json
@@ -67,11 +67,10 @@ module Api
       end
 
       def check_owner
-        unless @recipe.user == current_user
+        unless @recipe.user == current_api_user
           render json: { error: "You are not authorized to perform this action" }, status: :forbidden
         end
       end
-
 
       def recipe_params
         params.require(:recipe).permit(:title, :description, :cook_time, :image,
