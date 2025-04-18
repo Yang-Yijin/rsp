@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
+  get "logout", to: "sessions#destroy"  # 添加 GET 方法的路由
 
   resources :recipes do
     resources :ingredients, only: [ :create, :update, :destroy ]
